@@ -1,4 +1,4 @@
-package main
+package rpn
 
 import (
 	"errors"
@@ -9,14 +9,6 @@ import (
 
 var ( // кол-во знаков после запятой, сохраняющиеся при расчетах
 	Tochnost = "%.7f"
-	err_skobk = errors.New("ошибка в записи скобок")
-	err_symbl = errors.New("ошибка - непредвиденный сивол")
-	err_znak = errors.New("ошибка в записи знаков")
-	err_float = errors.New("ошибка при обработке дробных значений")
-	Err_acc = errors.New("некорректное число точности. Необходимо целое из отрезка: [0;64]")
-	Err_no_post = errors.New("нужен запрос типа post")
-	Err_float_write = errors.New("ошибка в записи дробных чисел")
-	Number_Operation = 0
 )
 
 func ChangeTochonst(s string){ // используется в хендлере Accuracy, вызываемом по адресу
@@ -63,13 +55,12 @@ func claearExpr(expression string) (string, error){  // проверка, уда
 			} 
 		}
 	}
-	fmt.Println("exression!:", expression)
 	return expression, nil
 }
 
 func isNum(s byte) bool{ // среди цифр есть ".", для работы с десятичными дробями /
-// ошибки для них в основном не описаны, т.к. у меня были более важные дела, да и вообще это необязательно 0_0 2
-	nums := "#.0123456789"
+// ошибки для них в основном не описаны, т.к. у меня были более важные дела, да и вообще это необязательно 0_0
+	nums := ".0123456789"
 	for i := 0; i < len(nums); i++{
 		if s == nums[i]{return true}
 	}
@@ -256,9 +247,4 @@ func Calc(expression string) (string, error) {
 	}
 	fmt.Println("exression!:", expression)	
 	return expression, nil
-}
-
-
-func main(){
-	fmt.Println(Calc("-6 * -5 + 3 + 4 + 9"))
 }
